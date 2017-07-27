@@ -12,11 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :movie_name %>
+    <%= form.label :tags_ids, "Tags" %><br>
+    <%= form.text_field :name, id: :movie_name %><br>
+<!--     <%= form.select(:tags_ids, Tag.all.map{|t| [t.name, t.id]},{},multiple: true) %><br> -->
+    <%= collection_check_boxes(:movie, :tags_ids, Tag.all, :id, :name) %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit %> 
   </div>
 <% end %>

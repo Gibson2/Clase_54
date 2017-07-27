@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy, :destroy_tag]
 
   # GET /movies
   # GET /movies.json
@@ -25,6 +25,10 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = Movie.new(movie_params)
+    tags_ids = movie_params[:tags_ids].delete_if{|i| i.empty?}
+    @tags = Tag.find([tags_ids])
+    @movie.tags = []
+    @movie.tags << @tags
 
     respond_to do |format|
       if @movie.save
@@ -40,6 +44,11 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   # PATCH/PUT /movies/1.json
   def update
+    tags_ids = movie_params[:tags_ids].delete_if{|i| i.empty?}
+    @tags = Tag.find([tags_ids])
+    @movie.tags = []
+    @movie.tags << @tags
+
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
@@ -61,6 +70,12 @@ class MoviesController < ApplicationController
     end
   end
 
+  def destroy_tag
+    @movie.destroy
+    respond_to
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
@@ -69,6 +84,6 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:name)
+      params.require(:movie).permit(:name, tags_ids: [])
     end
 end
