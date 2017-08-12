@@ -15,7 +15,19 @@
     <% @movies.each do |movie| %>
       <tr>
         <td><%= movie.name %></td>
-        <td><%= movie.tags.collect(&:name) %> </td>
+        <td><%= movie.tags.collect(&:name).join(", ") %> </td>
+        <td>
+          <ul class="nav">
+            <% movie.tags.each do |t| %>
+              <li>
+                <%= tag.name %>
+                <span class="badge info">
+                  <%= link_to "x", destroy_tag_movie_path(movie, tag) %>
+                </span>
+              </li>              
+            <% end %>%>
+          </ul>
+        </td>
         <td><%= link_to 'Show', movie %></td>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
         <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>

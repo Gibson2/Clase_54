@@ -1,6 +1,7 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :destroy_tag]
-
+  before_action :authenticate_user!, except: :index
+  before_action :filter_admin!, except: [:index, :show]
   # GET /movies
   # GET /movies.json
   def index
@@ -71,9 +72,10 @@ class MoviesController < ApplicationController
   end
 
   def destroy_tag
+    tag = Tag.find(params[:tag_id])
+    @movie.tags.delete(tag)
     @movie.destroy
-    respond_to
-
+    respond_to movies_path
   end
 
   private

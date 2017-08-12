@@ -6,3 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+MovieTag.destroy_all
+Movie.destroy_all
+Tag.destroy_all
+
+m = Movie.new(name: "Terminator")
+m.tags << Tag.new(name: "Aventura")
+m.tags << Tag.new(name: "Acción")
+m.tags.build(name: "Terror")
+m.save
