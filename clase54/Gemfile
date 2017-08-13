@@ -20,7 +20,10 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 #Gema de Devise
-gem "devise", git: 'https://github.com/plataformatec/devise.git'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git'
+
+#Gema Cancancan
+gem 'cancancan'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
